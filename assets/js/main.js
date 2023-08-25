@@ -60,7 +60,7 @@ const loadMorePokemons = (event) => {
     const newLimit = maxRecords - offset;
     loadPokemonItens(offset, newLimit);
 
-    loadMoreButton.parentElement.removeChild(loadMoreButton);
+    loadMoreButton.style.display = "none";
   } else {
     loadPokemonItens(offset, limit);
   }
