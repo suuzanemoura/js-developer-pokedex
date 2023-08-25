@@ -42,6 +42,8 @@ const isPokemonFound = () => {
   if (!pokemonFound.length) {
     alert("Nenhum pokemon encontrado, tente novamente.");
 
+    amountPkmsFoundDiv.style.display = "none";
+
     const newHtml = pokeList.map(convertPokemonToLi).join("");
     pokemonList.innerHTML = newHtml;
 
