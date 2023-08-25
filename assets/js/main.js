@@ -5,15 +5,17 @@ const maxRecords = 1008;
 const limit = 60;
 let offset = 0;
 
+let pokeList = [];
+
 function convertPokemonToLi(pokemon) {
   return `
         <li class="pokemon ${pokemon.type}">
-            <span class="number">#${
-              pokemon.number < 10
-                ? "00" + pokemon.number
-                : pokemon.number > 10 && pokemon.number < 100
-                ? "0" + pokemon.number
-                : pokemon.number
+            <span class="id">#${
+              pokemon.id < 10
+                ? "00" + pokemon.id
+                : pokemon.id > 10 && pokemon.id < 100
+                ? "0" + pokemon.id
+                : pokemon.id
             }</span>
             <span class="name">${pokemon.name}</span>
 
@@ -40,12 +42,17 @@ function loadPokemonItens(offset, limit) {
   pokeApi.getPokemons(offset, limit).then((pokemons = []) => {
     const newHtml = pokemons.map(convertPokemonToLi).join("");
     pokemonList.innerHTML += newHtml;
+
+    for (let pokemon of pokemons) {
+      pokeList.push(pokemon);
+    }
+    console.log(pokeList);
   });
 }
 
 loadPokemonItens(offset, limit);
 
-loadMoreButton.addEventListener("click", () => {
+const loadMorePokemons = (event) => {
   offset += limit;
   const qtdRecordsWithNexPage = offset + limit;
 
@@ -57,4 +64,4 @@ loadMoreButton.addEventListener("click", () => {
   } else {
     loadPokemonItens(offset, limit);
   }
-});
+};

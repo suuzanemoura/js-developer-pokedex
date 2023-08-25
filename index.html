@@ -27,8 +27,8 @@
         <header>
             <h1>Pokedex</h1>
             <form>
-                <input type="search" placeholder="Search your pokemon...">
-                <button type="submit">Search</button>
+                <input type="search" name="search" id="search" placeholder="Search your pokemon..." autocomplete="off" oninput="empty()">
+                <button type="submit" onclick="searchPokemon(event)">Search</button>
               </form>
         </header>
 
@@ -38,8 +38,8 @@
                     <!-- Pokelist here -->
                 </ol>
         
-                <div class="pagination">
-                    <button id="loadMoreButton" type="button">
+                <div class="pagination" id="pagination">
+                    <button id="loadMoreButton" type="button" onclick="loadMorePokemons(event)">
                         Load More
                     </button>
                 </div>
@@ -63,6 +63,7 @@
     <script src="/assets/js/pokemon-model.js"></script>
     <script src="/assets/js/poke-api.js"></script>
     <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/search-pokemon.js"></script>
 </body>
 
 </html>
