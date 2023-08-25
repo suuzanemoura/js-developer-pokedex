@@ -40,7 +40,11 @@ const searchingPokemon = () => {
 
 const isPokemonFound = () => {
   if (!pokemonFound.length) {
-    alert("Nenhum pokemon encontrado, tente novamente.");
+    swal({
+      text: "Nenhum pokemon encontrado, tente novamente!",
+      icon: "error",
+      button: "OK",
+    });
 
     amountPkmsFoundDiv.style.display = "none";
 
@@ -70,9 +74,17 @@ const searchPokemon = (event) => {
   event.preventDefault();
 
   if (search.value === "") {
-    alert("Digite sua busca e tente novamente.");
+    swal({
+      text: "Digite sua busca e tente novamente!",
+      icon: "error",
+      button: "OK",
+    });
   } else if (search.value === "" && event.key === "Enter") {
-    alert("Digite sua busca e tente novamente.");
+    swal({
+      text: "Digite sua busca e tente novamente!",
+      icon: "error",
+      button: "OK",
+    });
   } else {
     searchingPokemon();
     isPokemonFound();
