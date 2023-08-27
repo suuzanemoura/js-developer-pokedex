@@ -8,12 +8,12 @@ body {
     background-image: url("../imgs/pokeball-for-background-2.png");
     background-repeat: no-repeat;
     background-position: top right;
-    background-size: 200px;
+    background-size: 174px;
 }
 
-header{
+.main-header{
     width: 100%;
-    height: 10rem;
+    margin: 2.5rem 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -24,7 +24,7 @@ h1{
     margin: 0.5rem;
 }
 
-form {
+.main-header form {
     color: #555;
     display: flex;
     padding: 2px;
@@ -32,7 +32,7 @@ form {
     border-radius: 5px;
   }
 
-input[type="search"] {
+.main-header input[type="search"] {
     border: none;
     background: transparent;
     margin: 0;
@@ -44,11 +44,11 @@ input[type="search"] {
     width: 12rem;
 }
   
-input[type="search"]::placeholder {
+.main-header input[type="search"]::placeholder {
     color: #bbb;
 }
 
-button[type="submit"] {
+.main-header button[type="submit"] {
     text-indent: -999px;
     overflow: hidden;
     width: 40px;
@@ -61,36 +61,29 @@ button[type="submit"] {
     opacity: 0.7;
 }
 
-button[type="submit"]:hover {
+.main-header button[type="submit"]:hover {
     opacity: 1;
 }
 
-button[type="submit"]:focus,
-input[type="search"]:focus {
+.main-header button[type="submit"]:focus,
+.main-header input[type="search"]:focus {
     box-shadow: 0 0 3px 0 darkblue;
     border-color: darkblue;
     outline: none;
 }
 
-.swal-button {
-    padding: 7px 19px;
-    border-radius: 2px;
-    background-color: darkblue;
-    color: yellow;
-    font-size: 12px;
-    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
-    &:not([disabled]):hover {
-        background-color: #000;
-      }
-}
-
 .content {
     width: 100%;
-    min-height: 87vh;
-    padding: 0.5rem 1rem 1rem 1rem;
+    min-height: 80vh;
+    padding: 0rem 1.5rem 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-content: center;
+    text-align: center;
 }
 
-footer{
+.main-footer{
     width: 100%;
     height: auto;
     padding: 0.5rem 2rem;
@@ -101,7 +94,12 @@ footer{
     background-color: #f5f5f6;
 }
 
-footer > p {
+.main-footer a{
+    text-decoration: none;
+    color: #00008b;
+}
+
+.main-footer > p {
     margin: 1rem 0;
     font-size: 0.65rem;
 }
@@ -111,38 +109,54 @@ footer > p {
     gap: 0.5rem;
 }
 
+/* Sobrescrevendo CSS do Sweet Alert */
+
+.swal2-popup .swal2-styled:focus {
+    box-shadow: none !important;
+}
+
+div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm{
+    color: yellow !important;
+}
+
 @media screen and (min-width: 560px) {
 
     .content{
-        padding: 0.5rem 3rem 1.5rem 3rem;
+        padding: 0rem 3rem 1.5rem 3rem;
     }
 }
 
 @media screen and (min-width: 768px) {
 
-    header{
-        padding: 0 7rem;
+    body {
+        background-size: 219px;
+    }
+
+    .main-header{
+        padding: 1.2rem 5rem;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    
+}
+
+@media screen and (min-width: 992px) {
+
+    .main-footer{
+        padding: 0.5rem 10rem;
+    }
+    
+    .main-footer > p {
+        font-size: 0.85rem;
+    }
+
+    .main-header{
+        padding: 1.2rem 10rem;
         flex-direction: row;
         justify-content: space-between;
     }
 
     .content{
-        padding: 0.5rem 5rem 1.5rem 5rem;
-    }
-}
-
-@media screen and (min-width: 992px) {
-
-    footer{
-        padding: 0.5rem 5rem;
-    }
-    
-    footer > p {
-        font-size: 0.95rem;
-    }
-
-    svg{
-        width: 1.2rem;
-        height: auto;
+        padding: 0rem 8rem 1.5rem 8rem;
     }
 }

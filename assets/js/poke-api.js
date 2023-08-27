@@ -39,7 +39,7 @@ const convertPokeApiDetailsToPokemon = async (pokeDetails) => {
 
   const height = pokeDetails.height / 10;
   pokemon.height =
-    height >= 1 ? `${height.toFixed(2)}m` : `${height.toFixed(2)}cm`;
+    height >= 1 ? `${height.toFixed(2)} m` : `${height.toFixed(2)}cm`;
   pokemon.weight = `${pokeDetails.weight / 10}kg`;
 
   pokemon.abilities = pokeDetails.abilities.map(
@@ -62,11 +62,21 @@ const convertPokeApiDetailsToPokemon = async (pokeDetails) => {
     const response = await fetch(pokeDetails.species.url);
     const speciesDetails = await response.json();
 
+    if (speciesDetails.flavor_text_entries) {
+      const about = speciesDetails.flavor_text_entries.filter(
+        (flavorTextSlot) =>
+          flavorTextSlot.language.name === "en" &&
+          flavorTextSlot.version.name === "omega-ruby",
+      );
+
+      pokemon.about = about[0].flavor_text;
+    }
+
     if (speciesDetails.genera) {
       const [species] = speciesDetails.genera.filter(
         (generaSlot) => generaSlot.language.name === "en",
       );
-      pokemon.species = species.genus;
+      pokemon.species = species.genus.split(" ")[0];
     }
 
     if (speciesDetails.gender_rate) {
@@ -86,7 +96,7 @@ const convertPokeApiDetailsToPokemon = async (pokeDetails) => {
     }
 
     if (speciesDetails.hatch_counter) {
-      pokemon.eggCycle = 255 * (speciesDetails.hatch_counter + 1);
+      pokemon.eggCycle = 255 * (speciesDetails.hatch_counter + 1) + " steps";
     }
   } catch (err) {
     console.error(err);
