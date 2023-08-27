@@ -15,23 +15,19 @@ const amountPkmsFoundElements = (qtdPokemonFound, amountPokeList) => {
 };
 
 const searchingPokemon = () => {
-  let searching = search.value;
+  let searchValue = search.value;
   for (let pokemon of pokeList) {
-    if (pokemon.name.toLowerCase().includes(searching.toLowerCase())) {
-      pokemonFound.push(pokemon);
-    }
-
-    if (pokemon.id === Number(searching)) {
-      pokemonFound.push(pokemon);
-    }
-
     if (pokemon.types[1]) {
-      pokemon.types[0].toLowerCase().includes(searching.toLowerCase()) ||
-      pokemon.types[1].toLowerCase().includes(searching.toLowerCase())
+      pokemon.types[0].toLowerCase().includes(searchValue.toLowerCase()) ||
+      pokemon.types[1].toLowerCase().includes(searchValue.toLowerCase()) ||
+      pokemon.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+      [pokemon.id].includes(Number(searchValue))
         ? pokemonFound.push(pokemon)
         : null;
     } else {
-      pokemon.types[0].toLowerCase().includes(searching.toLowerCase())
+      pokemon.types[0].toLowerCase().includes(searchValue.toLowerCase()) ||
+      pokemon.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+      [pokemon.id].includes(Number(searchValue))
         ? pokemonFound.push(pokemon)
         : null;
     }
@@ -40,10 +36,11 @@ const searchingPokemon = () => {
 
 const isPokemonFound = () => {
   if (!pokemonFound.length) {
-    swal({
+    Swal.fire({
       text: "Nenhum pokemon encontrado, tente novamente!",
       icon: "error",
-      button: "OK",
+      confirmButtonColor: "#00008b",
+      confirmButtonText: "OK",
     });
 
     amountPkmsFoundDiv.style.display = "none";
@@ -74,16 +71,18 @@ const searchPokemon = (event) => {
   event.preventDefault();
 
   if (search.value === "") {
-    swal({
+    Swal.fire({
       text: "Digite sua busca e tente novamente!",
       icon: "error",
-      button: "OK",
+      confirmButtonColor: "#00008b",
+      confirmButtonText: "OK",
     });
   } else if (search.value === "" && event.key === "Enter") {
-    swal({
+    Swal.fire({
       text: "Digite sua busca e tente novamente!",
       icon: "error",
-      button: "OK",
+      confirmButtonColor: "#00008b",
+      confirmButtonText: "OK",
     });
   } else {
     searchingPokemon();
