@@ -39,22 +39,27 @@ const convertPokeApiDetailsToPokemon = async (pokeDetails) => {
 
   const height = pokeDetails.height / 10;
   pokemon.height =
-    height >= 1 ? `${height.toFixed(2)} m` : `${height.toFixed(2)}cm`;
+    height >= 1 ? `${height.toFixed(2)}m` : `${height.toFixed(2)}cm`;
   pokemon.weight = `${pokeDetails.weight / 10}kg`;
 
   pokemon.abilities = pokeDetails.abilities.map(
     (abilitySlot) => abilitySlot.ability.name,
   );
 
-  const moves = pokeDetails.moves.map((moveSlot) => moveSlot.move.name);
-  pokemon.moves = moves;
+  const moves = pokeDetails.moves.filter((moveSlot) => {
+    for (let detail of moveSlot.version_group_details) {
+      return detail.level_learned_at == 0;
+    }
+  });
+
+  pokemon.moves = moves.map((moveSlot) => moveSlot.move.name).slice(0, 13);
 
   if (pokeDetails.stats) {
-    let total = 0;
     pokeDetails.stats.map((statSlot) => {
-      pokemon.baseStats[`${statSlot.stat.name}`] = statSlot.base_stat;
-      total += statSlot.base_stat;
-      pokemon.baseStats.total = total;
+      pokemon.baseStats.push({
+        name: getStatName(statSlot.stat.name),
+        value: statSlot.base_stat,
+      });
     });
   }
 
@@ -79,14 +84,15 @@ const convertPokeApiDetailsToPokemon = async (pokeDetails) => {
       pokemon.species = species.genus.split(" ")[0];
     }
 
-    if (speciesDetails.gender_rate) {
+    if (speciesDetails.gender_rate !== -1) {
       const genderRate = speciesDetails.gender_rate;
       const female = (genderRate / 8) * 100;
       const male = 100 - female;
 
-      genderRate !== -1
-        ? ((pokemon.gender.female = female), (pokemon.gender.male = male))
-        : (pokemon.gender.genderless = true);
+      pokemon.gender.female = female;
+      pokemon.gender.male = male;
+    } else {
+      pokemon.gender.genderless = true;
     }
 
     if (speciesDetails.egg_groups) {
@@ -103,4 +109,23 @@ const convertPokeApiDetailsToPokemon = async (pokeDetails) => {
   }
 
   return pokemon;
+};
+
+const getStatName = (name) => {
+  switch (name) {
+    case "hp":
+      return "HP";
+    case "special-attack":
+      return "Sp. Atk";
+    case "special-defense":
+      return "Sp. Def";
+    case "attack":
+      return "Attack";
+    case "defense":
+      return "Defense";
+    case "speed":
+      return "Speed";
+    default:
+      return name;
+  }
 };

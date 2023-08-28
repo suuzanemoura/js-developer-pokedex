@@ -9,9 +9,13 @@ class Pokemon {
   height = 0;
   weight = 0;
   abilities = [];
-  gender = {};
+  gender = {
+    male: 0,
+    female: 0,
+    genderless: false,
+  };
   eggGroups = [];
   eggCycle = 0;
-  baseStats = {};
+  baseStats = [];
   moves = [];
 }
