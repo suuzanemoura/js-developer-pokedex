@@ -3,6 +3,10 @@
     box-sizing: border-box;
 }
 
+a {
+    text-decoration: none;
+}
+
 body {
 
     background-image: url("../imgs/pokeball-for-background-2.png");
@@ -107,6 +111,10 @@ h1{
 .social-media{
     display: flex;
     gap: 0.5rem;
+}
+
+.social-media svg{
+    fill: #00008b;
 }
 
 /* Sobrescrevendo CSS do Sweet Alert */
